@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Course from './components/Course';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+    displyCourse(courses) {
+        return courses.map((c, index) => {
+            return <Course key={index} name={c.name} isFree={c.isFree}>{c.lesson}</Course> 
+        });
+    }
+
+    render() {
+
+        const listCourse = [
+            {
+                name: 'ReactJS',
+                isFree: true,
+                lesson: ['Overview', 'Props']
+            },
+            {
+                name: 'C#',
+                isFree: false,
+                lesson: ['OOP', 'Delegate']
+            },   
+            {
+                name: 'NodeJS',
+                isFree: true,
+                lesson: ['ES6', 'MiddleWare']
+            }
+        ];
+
+
+        return (
+            <div className="row">
+                {this.displyCourse(listCourse)}
+            </div>
+        );
+  }
 }
 
 export default App;
