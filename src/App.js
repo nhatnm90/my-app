@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Course from './components/Course';
+import LifeCycle from './components/LifeCycle';
+import Clock from './components/Clock';
 
 class App extends Component {
 
@@ -31,8 +33,18 @@ class App extends Component {
 
 
         return (
-            <div className="row">
-                {this.displyCourse(listCourse)}
+            <div>
+                <div className="row">
+                    {this.displyCourse(listCourse)}
+                </div>
+                
+                <div className="row">
+                    <LifeCycle title='Life Cycle' />
+                </div>
+
+                <div className="row">
+                    <Clock />
+                </div>
             </div>
         );
   }
