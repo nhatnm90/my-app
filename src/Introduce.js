@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Course from './components/Course';
-import LifeCycle from './components/LifeCycle';
-import Clock from './components/Clock';
+import Course from './components/introduce/Course';
+import LifeCycle from './components/introduce/LifeCycle';
+import Clock from './components/introduce/Clock';
 
-class App extends Component {
+class Introduce extends Component {
 
     displyCourse(courses) {
         return courses.map((c, index) => {
@@ -50,4 +50,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Introduce;

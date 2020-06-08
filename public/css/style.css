@@ -2,3 +2,9 @@ div.row{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+#spSort{
+    padding: 7px 10px 9px 10px;
+    font-size: 14px;
+    font-weight: 400;
+}
