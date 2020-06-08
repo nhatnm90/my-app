@@ -21,6 +21,7 @@ class Search extends Component {
     }
 
     handleClear() {
+        this.setState({ inputSearch: '' });
         this.props.onClickSearch('');
     }
 

@@ -27,8 +27,12 @@ class TodoList extends Component {
     }
 
     handleSearch(value) {
+        let filterItems = items;
+        if (value !== '') {
+            filterItems = items.filter(x => x.name.includes(value.toLowerCase()));
+        }
         this.setState({
-            items: this.state.items.filter(x => x.name.includes(value))
+            items: filterItems
         });
     }
 
@@ -38,8 +42,6 @@ class TodoList extends Component {
         if (isShowAddForm) {
             addForm = <Form onClickCancel={this.handleToogleAddForm} />;
         }
-
-
 
         return (
             <div>
