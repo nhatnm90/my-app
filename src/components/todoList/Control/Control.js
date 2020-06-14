@@ -28,7 +28,7 @@ class Control extends Component {
             <div className="row">
               <Search onClickSearch={this.props.onClickSearch} />
                 {/* SORT AREA */}	
-              <Sort />
+              <Sort onClickSort={this.props.onClickSort} />
                 {/* ADD NEW TASK BUTTON */}
                 <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5">		
                     { button }	

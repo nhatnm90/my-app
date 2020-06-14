@@ -13,16 +13,15 @@ class TaskItem extends Component {
     }
 
     render() {
-        const { val: { index, name, level } } = this.props;
-        console.log(name);
+        const { val: { index, name, level, id } } = this.props;
         return (
             <tr>
                 <th scope="row">{index + 1}</th>
                 <td>{name}</td>
                 <td>{this.generateLevel(level)}</td>
                 <td>
-                    <button type="button" className="btn btn-warning">Edit</button>
-                    <button type="button" className="btn btn-danger">Delete</button>
+                    <button type="button" className="btn btn-warning" onClick={() => this.props.onEditItem({id, name, level})}>Edit</button>
+                    <button type="button" className="btn btn-danger" onClick={() => this.props.onDeleteItem(id)}>Delete</button>
                 </td>
             </tr>
         );
