@@ -25,11 +25,13 @@ class TodoList extends Component {
         this.handleSort = this.handleSort.bind(this);
         this.handleDeleteItem = this.handleDeleteItem.bind(this);
         this.handleAddTask = this.handleAddTask.bind(this);
-        this.handleEditItem = this.handleEditItem.bind(this);
+        this.handleBindingSelectedItem = this.handleBindingSelectedItem.bind(this);
+        this.handleEditTask = this.handleEditTask.bind(this);
     }
 
     handleToogleAddForm() {
         this.setState({
+            itemSelected: null,
             isShowAddForm: !this.state.isShowAddForm
         });
     }
@@ -46,27 +48,47 @@ class TodoList extends Component {
         let { items } = this.state;
         _.remove(items, i => i.id === id);
         this.setState({ items });
+
+        localStorage.setItem('items', JSON.stringify(items));
     }
 
     handleAddTask(task) {
         let { items } = this.state;
         items.push(task);
-        this.setState({ items });
+        this.setState({ items, isShowAddForm: false });
+
+        localStorage.setItem('items', JSON.stringify(items));
     }
 
-    handleEditItem(itemSelected) {
+    handleEditTask(task) {
+        let { items } = this.state;
+        _.remove(items, i => i.id === task.id);
+        items.push(task);
+        this.setState({ items, isShowAddForm: false });
+
+        localStorage.setItem('items', JSON.stringify(items));
+    }
+
+    handleBindingSelectedItem(itemSelected) {
         this.setState({ itemSelected, isShowAddForm: true });
     }
 
+    componentWillMount() {
+        const dataFromLocalStorage = JSON.parse(localStorage.getItem('items'));
+        this.setState({ items: dataFromLocalStorage ?? [] });
+        // this.setState({ items: mockItems });
+        // localStorage.setItem('items', JSON.stringify(this.state.items));
+    }
+
     componentDidMount() {
-        this.setState({ items: mockItems });
+        // localStorage.setItem('items', JSON.stringify(this.state.items));
     }
 
     render() {
         let addForm = null;
         let { isShowAddForm, items, sortDir, sortName, inputSearch, itemSelected } = this.state;
         if (isShowAddForm) {
-            addForm = <Form itemSelected={itemSelected} onAddTask={this.handleAddTask} onClickCancel={this.handleToogleAddForm} />;
+            addForm = <Form itemSelected={itemSelected} onAddTask={this.handleAddTask} onEditTask={this.handleEditTask} onClickCancel={this.handleToogleAddForm} />;
         }
 
         items = inputSearch.length > 0 ? items.filter(i => _.includes(_.toLower(i.name), _.toLower(inputSearch))) : items;
@@ -82,7 +104,7 @@ class TodoList extends Component {
                     onClickSort = {this.handleSort}
                 />
                 { addForm }
-                <TaskList editItem={this.handleEditItem} deleteItem={this.handleDeleteItem} items={items}/>
+                <TaskList editItem={this.handleBindingSelectedItem} deleteItem={this.handleDeleteItem} items={items}/>
             </div>
         );
     }

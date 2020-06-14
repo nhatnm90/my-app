@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { isEmpty, parseInt } from 'lodash';
+import { get, isEmpty, parseInt } from 'lodash';
 const uuidv4 = require('uuid/v4')
 
 class Form extends Component {
@@ -8,6 +8,7 @@ class Form extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: '',
             name: '',
             level: 0
         };
@@ -17,13 +18,41 @@ class Form extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillMount() {
+        const id = get(this.props, 'itemSelected.id', '');
+        if (!isEmpty(id)) {
+            const { name, level } = get(this.props, 'itemSelected', {});
+            this.setState({
+                id, name, level
+            });
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps !== null) {
+            const { itemSelected: { id, name, level } } = nextProps;
+            this.setState({
+                id, name, level
+            });
+        }
+    }
+
     handleSubmit(event) {
-        const { name, level } = this.state;
-        this.props.onAddTask({name, level: parseInt(level), id: uuidv4()});
+        const { id, name, level } = this.state;
+        if (isEmpty(id)) {
+            this.props.onAddTask({name, level: parseInt(level), id: uuidv4()});
+        } else {
+            this.props.onEditTask({name, level: parseInt(level), id});
+        }
         event.preventDefault();
     }
 
     handleCancel() {
+        this.setState({
+            id: '',
+            name: '',
+            level: 0
+        });
         this.props.onClickCancel();
     }
 
@@ -34,26 +63,20 @@ class Form extends Component {
         this.setState({
           [name]: value
         });
-      }
+    }
 
     render() {
-        let { name: displayName, level: displayLevel } = this.state;
-        const { itemSelected: { id, name, level } } = this.props;
-        if (!isEmpty(id)) {
-            displayName = name;
-            displayLevel = level;
-        }
-
+        const { name, level } = this.state;
         return (
             <div className="row">
                 <div className="col-md-offset-7 col-md-5">					
                   <form  onSubmit={this.handleSubmit} className="form-inline">
                     <div className="form-group">
                       {/* <label className="sr-only" htmlFor>label</label> */}
-                      <input name="name" type="text" className="form-control" placeholder="Task name" value={displayName} onChange={this.handleInputChange} />
+                      <input name="name" type="text" className="form-control" placeholder="Task name" value={name} onChange={this.handleInputChange} />
                     </div>
                     <div className="form-group">
-                        <select name="level" value={parseInt(displayLevel)} id="input" className="form-control" required="required" onChange={this.handleInputChange}>
+                        <select name="level" value={parseInt(level)} id="input" className="form-control" required="required" onChange={this.handleInputChange}>
                             <option value={0}>Low</option>
                             <option value={1}>Medium</option>
                             <option value={2}>High</option>
