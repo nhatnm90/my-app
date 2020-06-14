@@ -4,7 +4,7 @@ import Title from './components/todoList/Title'
 import Control from './components/todoList/Control/Control'
 import Form from './components/todoList/Form'
 import TaskList from './components/todoList/TaskList'
-import mockItems from './mockData/tasks'
+// import mockItems from './mockData/tasks'
 
 class TodoList extends Component {
 

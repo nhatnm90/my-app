@@ -28,10 +28,12 @@ class Sort extends Component {
               <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <li><a href='/#' role="button" onClick={() => this.handleSort('name', 'asc')}>Name Asc</a></li>
                 <li><a href='/#' role="button" onClick={() => this.handleSort('name', 'desc')}>Name Desc</a></li>
+                <hr/>
                 <li><a href='/#' role="button" onClick={() => this.handleSort('level', 'asc')}>Level Asc</a></li>
                 <li><a href='/#' role="button" onClick={() => this.handleSort('level', 'desc')}>Level Desc</a></li>
               </ul>
-        <span id="spSort" className="label label-success label-medium">{`${sortName.toLocaleUpperCase()} - ${sortDir.toUpperCase()}` }</span>
+              <span> </span>
+              <span id="spSort" className="label label-success label-medium">{`${sortName.toLocaleUpperCase()} - ${sortDir.toUpperCase()}` }</span>
             </div>
           </div>
         );

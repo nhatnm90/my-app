@@ -4,7 +4,7 @@ class Title extends Component {
     render() {
         return (
             <div className="page-header">
-                <h1>SUNSUN Todo List</h1>
+                <h2>Beauty Queen Todo List</h2>
             </div>
         );
     }
