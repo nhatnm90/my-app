@@ -6,7 +6,7 @@ class TaskList extends Component {
     render() {
         const itemEle = this.props.items.map((row, index) => {
             let item = Object.assign({},{ ...row, index });
-            return <TaskRow onEditItem={this.props.editItem} onDeleteItem={this.props.deleteItem} key={index} val={item} />
+            return <TaskRow onEditItem={this.props.editItem} openConfirmModal={this.props.openConfirmModal} key={index} val={item} />
         });
 
         return (

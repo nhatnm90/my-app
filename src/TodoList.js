@@ -4,6 +4,7 @@ import Title from './components/todoList/Title'
 import Control from './components/todoList/Control/Control'
 import Form from './components/todoList/Form'
 import TaskList from './components/todoList/TaskList'
+import ConfirmModal from './components/todoList/Control/ConfirmModal'
 // import mockItems from './mockData/tasks'
 
 class TodoList extends Component {
@@ -17,7 +18,9 @@ class TodoList extends Component {
             isShowAddForm: false,
             sortName: 'level',
             sortDir: 'desc',
-            itemSelected: null
+            itemSelected: null,
+            showModal: false,
+            deletedItem: null
         };
 
         this.handleToogleAddForm = this.handleToogleAddForm.bind(this);
@@ -27,6 +30,9 @@ class TodoList extends Component {
         this.handleAddTask = this.handleAddTask.bind(this);
         this.handleBindingSelectedItem = this.handleBindingSelectedItem.bind(this);
         this.handleEditTask = this.handleEditTask.bind(this);
+        this.handleOpenConfirmModal = this.handleOpenConfirmModal.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     handleToogleAddForm() {
@@ -44,13 +50,27 @@ class TodoList extends Component {
         this.setState({ sortName, sortDir });
     }
 
-    handleDeleteItem(id) {
+    handleOpenConfirmModal(deletedItem) {
+        this.setState({ showModal: true, deletedItem })
+    }
+
+    handleCloseModal() {
+        this.setState({ showModal: false })
+    }
+
+    deleteItem(id) {
         let { items } = this.state;
         _.remove(items, i => i.id === id);
-        this.setState({ items });
+        this.setState({ items, deleteItem: null });
 
         localStorage.setItem('items', JSON.stringify(items));
     }
+
+    handleDeleteItem(id) {
+        this.deleteItem(id);
+        this.handleCloseModal();
+    }
+
 
     handleAddTask(task) {
         let { items } = this.state;
@@ -76,17 +96,15 @@ class TodoList extends Component {
     componentWillMount() {
         const dataFromLocalStorage = JSON.parse(localStorage.getItem('items'));
         this.setState({ items: dataFromLocalStorage ?? [] });
-        // this.setState({ items: mockItems });
-        // localStorage.setItem('items', JSON.stringify(this.state.items));
     }
 
     componentDidMount() {
-        // localStorage.setItem('items', JSON.stringify(this.state.items));
     }
 
     render() {
         let addForm = null;
-        let { isShowAddForm, items, sortDir, sortName, inputSearch, itemSelected } = this.state;
+
+        let { isShowAddForm, items, sortDir, sortName, inputSearch, itemSelected, showModal, deletedItem } = this.state;
         if (isShowAddForm) {
             addForm = <Form itemSelected={itemSelected} onAddTask={this.handleAddTask} onEditTask={this.handleEditTask} onClickCancel={this.handleToogleAddForm} />;
         }
@@ -104,7 +122,8 @@ class TodoList extends Component {
                     onClickSort = {this.handleSort}
                 />
                 { addForm }
-                <TaskList editItem={this.handleBindingSelectedItem} deleteItem={this.handleDeleteItem} items={items}/>
+                <TaskList editItem={this.handleBindingSelectedItem} openConfirmModal={this.handleOpenConfirmModal} items={items}/>
+                <ConfirmModal show={showModal} deletedItem={deletedItem ?? {}} handleCloseModal={this.handleCloseModal} handleDeleteItem={this.handleDeleteItem} />
             </div>
         );
     }

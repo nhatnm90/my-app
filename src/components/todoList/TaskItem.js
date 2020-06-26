@@ -22,7 +22,7 @@ class TaskItem extends Component {
                 <td>
                     <button type="button" className="btn btn-danger" onClick={() => this.props.onEditItem({id, name, level})}>Edit</button>
                     <span> </span>
-                    <button type="button" className="btn btn-success" onClick={() => this.props.onDeleteItem(id)}>Mark as done</button>
+                    <button type="button" className="btn btn-success" onClick={() => this.props.openConfirmModal({id, name})}>Mark as done</button>
                 </td>
             </tr>
         );

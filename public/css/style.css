@@ -8,3 +8,8 @@ div.row{
     font-size: 14px;
     font-weight: 400;
 }
+
+.modalCustom {
+    background-color: gray;
+    opacity: 0.5;
+}
