@@ -16,12 +16,13 @@ class TaskItem extends Component {
         const { val: { index, name, level, id } } = this.props;
         return (
             <tr>
-                <th scope="row">{index + 1}</th>
+                <th scope="row">{index + 1}</th>    
                 <td>{name}</td>
                 <td>{this.generateLevel(level)}</td>
                 <td>
-                    <button type="button" className="btn btn-warning" onClick={() => this.props.onEditItem({id, name, level})}>Edit</button>
-                    <button type="button" className="btn btn-danger" onClick={() => this.props.onDeleteItem(id)}>Delete</button>
+                    <button type="button" className="btn btn-danger" onClick={() => this.props.onEditItem({id, name, level})}>Edit</button>
+                    <span> </span>
+                    <button type="button" className="btn btn-success" onClick={() => this.props.openConfirmModal({id, name})}>Mark as done</button>
                 </td>
             </tr>
         );

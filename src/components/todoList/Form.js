@@ -76,7 +76,7 @@ class Form extends Component {
                       <input name="name" type="text" className="form-control" placeholder="Task name" value={name} onChange={this.handleInputChange} />
                     </div>
                     <div className="form-group">
-                        <select name="level" value={parseInt(level)} id="input" className="form-control" required="required" onChange={this.handleInputChange}>
+                        <select  placeholder="Task priority" name="level" value={parseInt(level)} id="input" className="form-control" required="required" onChange={this.handleInputChange}>
                             <option value={0}>Low</option>
                             <option value={1}>Medium</option>
                             <option value={2}>High</option>

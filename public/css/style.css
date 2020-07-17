@@ -4,7 +4,12 @@ div.row{
 }
 
 #spSort{
-    padding: 7px 10px 9px 10px;
+    padding: 5px 10px 10px 10px;
     font-size: 14px;
     font-weight: 400;
+}
+
+.modalCustom {
+    background-color: gray;
+    opacity: 0.5;
 }
